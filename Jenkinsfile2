@@ -1,3 +1,4 @@
+
 (with K8S Stage)
 
 pipeline {
@@ -10,8 +11,8 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        DOCKER_IMAGE = 'akshu20791/bms:latest'
-        EKS_CLUSTER_NAME = 'akshat-eks'
+        DOCKER_IMAGE = ' darshan6763/bms:latest'
+        EKS_CLUSTER_NAME = 'cloudhustlers-cluster-eks'
         AWS_REGION = 'us-east-1'
     }
 
@@ -24,7 +25,10 @@ pipeline {
 
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/akshu20791/Book-My-Show.git'
+               withCredentials([usernamePassword(credentialsId: 'github-creds', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                    git branch: 'my-new-feature',
+                        url: "https://${GIT_USER}:${GIT_PASS}@github.com/Darshan6763/Book-My-Show.git"
+                }
                 sh 'ls -la'  // Verify files after checkout
             }
         }
@@ -127,7 +131,7 @@ pipeline {
                 body: "Project: ${env.JOB_NAME}<br/>" +
                       "Build Number: ${env.BUILD_NUMBER}<br/>" +
                       "URL: ${env.BUILD_URL}<br/>",
-                to: 'kastrokiran@gmail.com',
+                to: 'rajgupta6763@gmail.com',
                 attachmentsPattern: 'trivyfs.txt'
         }
     }
