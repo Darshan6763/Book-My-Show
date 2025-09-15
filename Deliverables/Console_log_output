@@ -1,0 +1,722 @@
+
+Started by user Darshan
+
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins
+
+ in /var/lib/jenkins/workspace/Darshan/Capstone
+[Pipeline] {
+[Pipeline] tool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Tool Install)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clean Workspace)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Checkout from Git)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $GIT_PASS
+[Pipeline] {
+[Pipeline] git
+Warning: A secret was passed to "git" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [GIT_PASS]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://Darshan6763:****@github.com/Darshan6763/Book-My-Show.git
+ > git init /var/lib/jenkins/workspace/Darshan/Capstone # timeout=10
+Fetching upstream changes from https://Darshan6763@github.com/Darshan6763/Book-My-Show.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://Darshan6763:****@github.com/Darshan6763/Book-My-Show.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://Darshan6763:****@github.com/Darshan6763/Book-My-Show.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/my-new-feature^{commit} # timeout=10
+Checking out Revision 868476cc4f1a295314a2fe33a7f7fd7c0a87a47c (refs/remotes/origin/my-new-feature)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 868476cc4f1a295314a2fe33a7f7fd7c0a87a47c # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b my-new-feature 868476cc4f1a295314a2fe33a7f7fd7c0a87a47c # timeout=10
+Commit message: "feat: Capstone project-Darshan"
+ > git rev-list --no-walk 868476cc4f1a295314a2fe33a7f7fd7c0a87a47c # timeout=10
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] sh
++ ls -la
+total 76
+drwxr-xr-x 4 jenkins jenkins  4096 Sep 14 12:45 .
+drwxr-xr-x 5 jenkins jenkins  4096 Sep 14 12:45 ..
+-rw-r--r-- 1 jenkins jenkins  6148 Sep 14 12:45 .DS_Store
+drwxr-xr-x 8 jenkins jenkins  4096 Sep 14 12:45 .git
+-rw-r--r-- 1 jenkins jenkins 30439 Sep 14 12:45 BMS-Document.txt
+-rw-r--r-- 1 jenkins jenkins  3669 Sep 14 12:45 Jenkinsfile1
+-rw-r--r-- 1 jenkins jenkins  3991 Sep 14 12:45 Jenkinsfile2
+-rw-r--r-- 1 jenkins jenkins     1 Sep 14 12:45 README.md
+drwxr-xr-x 4 jenkins jenkins  4096 Sep 14 12:45 bookmyshow-app
+-rw-r--r-- 1 jenkins jenkins   418 Sep 14 12:45 deployment.yml
+-rw-r--r-- 1 jenkins jenkins   219 Sep 14 12:45 service.yml
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: sonar-server
+[Pipeline] {
+[Pipeline] sh
++ /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/bin/sonar-scanner -Dsonar.projectName=BMS -Dsonar.projectKey=BMS
+12:45:35.273 INFO  Scanner configuration file: /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/conf/sonar-scanner.properties
+12:45:35.283 INFO  Project root configuration file: NONE
+12:45:35.311 INFO  SonarScanner CLI 7.0.1.4817
+12:45:35.314 INFO  Java 17.0.8.1 Eclipse Adoptium (64-bit)
+12:45:35.315 INFO  Linux 6.14.0-1012-aws amd64
+12:45:35.393 INFO  User cache: /var/lib/jenkins/.sonar/cache
+12:45:37.626 INFO  Communicating with SonarQube Server 9.9.8.100196
+12:45:38.972 INFO  Load global settings
+12:45:39.211 INFO  Load global settings (done) | time=246ms
+12:45:39.221 INFO  Server id: 147B411E-AZlG4zD_T7rtbDN9_Dhq
+12:45:39.235 INFO  User cache: /var/lib/jenkins/.sonar/cache
+12:45:39.249 INFO  Load/download plugins
+12:45:39.250 INFO  Load plugins index
+12:45:39.349 INFO  Load plugins index (done) | time=99ms
+12:45:39.624 INFO  Load/download plugins (done) | time=375ms
+12:45:41.211 INFO  Process project properties
+12:45:41.212 INFO  Process project properties (done) | time=1ms
+12:45:41.226 INFO  Execute project builders
+12:45:41.232 INFO  Execute project builders (done) | time=5ms
+12:45:41.242 INFO  Project key: BMS
+12:45:41.243 INFO  Base dir: /var/lib/jenkins/workspace/Darshan/Capstone
+12:45:41.244 INFO  Working dir: /var/lib/jenkins/workspace/Darshan/Capstone/.scannerwork
+12:45:41.277 INFO  Load project settings for component key: 'BMS'
+12:45:41.331 INFO  Load project settings for component key: 'BMS' (done) | time=55ms
+12:45:41.680 INFO  Auto-configuring with CI 'Jenkins'
+12:45:41.689 INFO  Load quality profiles
+12:45:41.783 INFO  Load quality profiles (done) | time=94ms
+12:45:41.792 INFO  Load active rules
+12:45:43.785 INFO  Load active rules (done) | time=1993ms
+12:45:43.792 INFO  Load analysis cache
+12:45:43.839 INFO  Load analysis cache | time=47ms
+12:45:43.935 INFO  Load project repositories
+12:45:43.957 INFO  Load project repositories (done) | time=22ms
+12:45:44.032 INFO  Indexing files...
+12:45:44.033 INFO  Project configuration:
+12:45:44.694 INFO  106 files indexed
+12:45:44.694 INFO  0 files ignored because of scm ignore settings
+12:45:44.696 INFO  Quality profile for css: Sonar way
+12:45:44.697 INFO  Quality profile for js: Sonar way
+12:45:44.697 INFO  Quality profile for json: Sonar way
+12:45:44.697 INFO  Quality profile for web: Sonar way
+12:45:44.697 INFO  Quality profile for yaml: Sonar way
+12:45:44.697 INFO  ------------- Run sensors on module BMS
+12:45:44.919 INFO  Load metrics repository
+12:45:44.968 INFO  Load metrics repository (done) | time=49ms
+12:45:47.877 INFO  Sensor JaCoCo XML Report Importer [jacoco]
+12:45:47.881 INFO  'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+12:45:47.882 INFO  No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+12:45:47.885 INFO  Sensor JaCoCo XML Report Importer [jacoco] (done) | time=9ms
+12:45:47.885 INFO  Sensor IaC CloudFormation Sensor [iac]
+12:45:48.478 INFO  0 source files to be analyzed
+12:45:48.642 INFO  0/0 source files have been analyzed
+12:45:48.643 INFO  Sensor IaC CloudFormation Sensor [iac] (done) | time=758ms
+12:45:48.643 INFO  Sensor IaC Kubernetes Sensor [iac]
+12:45:48.863 INFO  2 source files to be analyzed
+12:45:49.168 INFO  2/2 source files have been analyzed
+12:45:49.169 INFO  Sensor IaC Kubernetes Sensor [iac] (done) | time=525ms
+12:45:49.169 INFO  Sensor JavaScript analysis [javascript]
+12:45:54.417 INFO  62 source files to be analyzed
+12:46:03.928 INFO  62/62 source files have been analyzed
+12:46:03.929 INFO  Hit the cache for 0 out of 62
+12:46:03.931 INFO  Miss the cache for 62 out of 62: ANALYSIS_MODE_INELIGIBLE [62/62]
+12:46:03.932 INFO  Sensor JavaScript analysis [javascript] (done) | time=14763ms
+12:46:03.932 INFO  Sensor TypeScript analysis [javascript]
+12:46:03.933 INFO  No input files found for analysis
+12:46:03.933 INFO  Hit the cache for 0 out of 0
+12:46:03.933 INFO  Miss the cache for 0 out of 0
+12:46:03.933 INFO  Sensor TypeScript analysis [javascript] (done) | time=1ms
+12:46:03.933 INFO  Sensor JavaScript inside YAML analysis [javascript]
+12:46:03.936 INFO  No input files found for analysis
+12:46:03.936 INFO  Hit the cache for 0 out of 0
+12:46:03.936 INFO  Miss the cache for 0 out of 0
+12:46:03.936 INFO  Sensor JavaScript inside YAML analysis [javascript] (done) | time=3ms
+12:46:03.936 INFO  Sensor CSS Rules [javascript]
+12:46:03.947 INFO  17 source files to be analyzed
+12:46:04.613 INFO  17/17 source files have been analyzed
+12:46:04.614 INFO  Hit the cache for 0 out of 0
+12:46:04.614 INFO  Miss the cache for 0 out of 0
+12:46:04.614 INFO  Sensor CSS Rules [javascript] (done) | time=678ms
+12:46:04.614 INFO  Sensor CSS Metrics [javascript]
+12:46:04.743 INFO  Sensor CSS Metrics [javascript] (done) | time=129ms
+12:46:04.743 INFO  Sensor C# Project Type Information [csharp]
+12:46:04.745 INFO  Sensor C# Project Type Information [csharp] (done) | time=2ms
+12:46:04.746 INFO  Sensor C# Analysis Log [csharp]
+12:46:04.793 INFO  Sensor C# Analysis Log [csharp] (done) | time=46ms
+12:46:04.793 INFO  Sensor C# Properties [csharp]
+12:46:04.793 INFO  Sensor C# Properties [csharp] (done) | time=0ms
+12:46:04.793 INFO  Sensor HTML [web]
+12:46:04.852 INFO  Sensor HTML [web] (done) | time=59ms
+12:46:04.852 INFO  Sensor TextAndSecretsSensor [text]
+12:46:04.866 INFO  84 source files to be analyzed
+12:46:05.670 INFO  84/84 source files have been analyzed
+12:46:05.671 INFO  Sensor TextAndSecretsSensor [text] (done) | time=819ms
+12:46:05.671 INFO  Sensor VB.NET Project Type Information [vbnet]
+12:46:05.672 INFO  Sensor VB.NET Project Type Information [vbnet] (done) | time=1ms
+12:46:05.672 INFO  Sensor VB.NET Analysis Log [vbnet]
+12:46:05.711 INFO  Sensor VB.NET Analysis Log [vbnet] (done) | time=39ms
+12:46:05.711 INFO  Sensor VB.NET Properties [vbnet]
+12:46:05.712 INFO  Sensor VB.NET Properties [vbnet] (done) | time=1ms
+12:46:05.712 INFO  Sensor IaC Docker Sensor [iac]
+12:46:05.721 INFO  1 source file to be analyzed
+12:46:05.836 INFO  1/1 source file has been analyzed
+12:46:05.837 INFO  Sensor IaC Docker Sensor [iac] (done) | time=124ms
+12:46:05.844 INFO  ------------- Run sensors on project
+12:46:05.923 INFO  Sensor Analysis Warnings import [csharp]
+12:46:05.925 INFO  Sensor Analysis Warnings import [csharp] (done) | time=2ms
+12:46:05.925 INFO  Sensor Zero Coverage Sensor
+12:46:05.959 INFO  Sensor Zero Coverage Sensor (done) | time=34ms
+12:46:05.994 INFO  CPD Executor 10 files had no CPD blocks
+12:46:05.994 INFO  CPD Executor Calculating CPD for 53 files
+12:46:06.065 INFO  CPD Executor CPD calculation finished (done) | time=69ms
+12:46:06.196 INFO  Analysis report generated in 116ms, dir size=721.4 kB
+12:46:06.411 INFO  Analysis report compressed in 215ms, zip size=410.9 kB
+12:46:06.475 INFO  Analysis report uploaded in 63ms
+12:46:06.476 INFO  ANALYSIS SUCCESSFUL, you can find the results at: http://56.228.41.23:9000/dashboard?id=BMS
+12:46:06.477 INFO  Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+12:46:06.477 INFO  More about the report processing at http://56.228.41.23:9000/api/ce/task?id=AZlIQuB_T7rtbDN9_Nbc
+12:46:12.169 INFO  Analysis total time: 32.178 s
+12:46:12.173 INFO  EXECUTION SUCCESS
+12:46:12.175 INFO  Total time: 36.985s
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Quality Gate)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] catchError
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] waitForQualityGate
+Checking status of SonarQube task 'AZlIQuB_T7rtbDN9_Nbc' on server 'sonar-server'
+SonarQube task 'AZlIQuB_T7rtbDN9_Nbc' status is 'SUCCESS'
+SonarQube task 'AZlIQuB_T7rtbDN9_Nbc' completed. Quality gate is 'OK'
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // catchError
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Dependencies)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ cd bookmyshow-app
++ [ -f package.json ]
++ rm -rf node_modules package-lock.json
++ npm install
+npm warn ERESOLVE overriding peer dependency
+npm warn ERESOLVE overriding peer dependency
+npm warn ERESOLVE overriding peer dependency
+npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated move-concurrently@1.0.1: This package is no longer supported.
+npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+npm warn deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated
+npm warn deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+npm warn deprecated figgy-pudding@3.5.2: This module is no longer supported.
+npm warn deprecated @hapi/topo@3.1.6: This version has been deprecated and is no longer supported or maintained
+npm warn deprecated @hapi/bourne@1.3.2: This version has been deprecated and is no longer supported or maintained
+npm warn deprecated rollup-plugin-terser@5.3.1: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+npm warn deprecated @humanwhocodes/config-array@0.5.0: Use @eslint/config-array instead
+npm warn deprecated copy-concurrently@1.0.5: This package is no longer supported.
+npm warn deprecated lodash.template@4.5.0: This package is deprecated. Use https://socket.dev/npm/package/eta instead.
+npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+npm warn deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+npm warn deprecated querystring@0.2.1: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+npm warn deprecated
+npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+npm warn deprecated fs-write-stream-atomic@1.0.10: This package is no longer supported.
+npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+npm warn deprecated sane@4.1.0: some dependency vulnerabilities fixed, support for node < 10 dropped, and newer ECMAScript syntax/features added
+npm warn deprecated babel-eslint@10.1.0: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
+npm warn deprecated @hapi/address@2.1.4: Moved to 'npm install @sideway/address'
+npm warn deprecated @humanwhocodes/object-schema@1.2.1: Use @eslint/object-schema instead
+npm warn deprecated rollup-plugin-babel@4.4.0: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-babel.
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated @hapi/hoek@8.5.1: This version has been deprecated and is no longer supported or maintained
+npm warn deprecated workbox-google-analytics@5.1.4: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+npm warn deprecated @hapi/joi@15.1.1: Switch to 'npm install joi'
+npm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+npm warn deprecated @material-ui/styles@4.11.5: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+npm warn deprecated eslint@7.32.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+npm warn deprecated @material-ui/core@4.12.4: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+
+added 2328 packages, and audited 2537 packages in 3m
+
+251 packages are looking for funding
+  run `npm fund` for details
+
+139 vulnerabilities (100 moderate, 32 high, 7 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Trivy FS Scan)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] catchError
+[Pipeline] {
+[Pipeline] sh
++ trivy fs .
+2025-09-14T12:49:09Z	INFO	[vulndb] Need to update DB
+2025-09-14T12:49:09Z	INFO	[vulndb] Downloading vulnerability DB...
+2025-09-14T12:49:09Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+17.00 MiB / 70.41 MiB [-------------->______________________________________________] 24.14% ? p/s ?44.87 MiB / 70.41 MiB [-------------------------------------->______________________] 63.73% ? p/s ?70.41 MiB / 70.41 MiB [----------------------------------------------------------->] 100.00% ? p/s ?70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 89.08 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 89.08 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 89.08 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 83.33 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 83.33 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 83.33 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 77.96 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 77.96 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 77.96 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 72.93 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 72.93 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 72.93 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 68.22 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [---------------------------------------------->] 100.00% 68.22 MiB p/s ETA 0s70.41 MiB / 70.41 MiB [-------------------------------------------------] 100.00% 20.96 MiB p/s 3.6s2025-09-14T12:49:14Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2025-09-14T12:49:14Z	INFO	[vuln] Vulnerability scanning is enabled
+2025-09-14T12:49:14Z	INFO	[secret] Secret scanning is enabled
+2025-09-14T12:49:14Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2025-09-14T12:49:14Z	INFO	[secret] Please see https://trivy.dev/v0.66/docs/scanner/secret#recommendation for faster secret detection
+2025-09-14T12:49:21Z	INFO	Number of language-specific files	num=1
+2025-09-14T12:49:21Z	INFO	[npm] Detecting vulnerabilities...
+[Pipeline] }
+[Pipeline] // catchError
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build & Push)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] catchError
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] withDockerRegistry
+$ /var/lib/jenkins/tools/org.jenkinsci.plugins.docker.commons.tools.DockerTool/docker/bin/docker login -u darshan6763 -p ******** https://index.docker.io/v1/
+Login Succeeded
+[Pipeline] {
+[Pipeline] sh
++ echo 🚀 Building Docker image...
+🚀 Building Docker image...
++ docker build --no-cache -t darshan6763/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 630B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:18
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:18
+#2 DONE 0.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/node:18@sha256:c6ae79e38498325db67193d391e6ec1d224d96c693a8a4d943498556716d3783
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 21.31MB 5.0s
+#7 transferring context: 43.81MB 10.1s
+#7 transferring context: 128.39MB 15.2s
+#7 transferring context: 150.07MB 20.2s
+#7 transferring context: 177.23MB 25.4s
+#7 transferring context: 241.04MB 30.4s
+#7 transferring context: 415.12MB 35.5s
+#7 transferring context: 500.15MB 38.1s done
+#7 DONE 38.4s
+
+#8 [3/6] COPY package.json package-lock.json ./
+#8 DONE 0.4s
+
+#9 [4/6] RUN npm install postcss@8.4.21 postcss-safe-parser@6.0.0 --legacy-peer-deps
+#9 14.03 npm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+#9 14.09 npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+#9 15.32 npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+#9 15.33 npm warn deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated
+#9 15.37 npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+#9 15.45 npm warn deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+#9 15.72 npm warn deprecated rollup-plugin-terser@5.3.1: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+#9 15.91 npm warn deprecated sane@4.1.0: some dependency vulnerabilities fixed, support for node < 10 dropped, and newer ECMAScript syntax/features added
+#9 15.91 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#9 16.05 npm warn deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+#9 16.17 npm warn deprecated workbox-google-analytics@5.1.4: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+#9 16.51 npm warn deprecated rollup-plugin-babel@4.4.0: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-babel.
+#9 16.84 npm warn deprecated querystring@0.2.1: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+#9 16.99 npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+#9 16.99 npm warn deprecated
+#9 16.99 npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+#9 18.60 npm warn deprecated move-concurrently@1.0.1: This package is no longer supported.
+#9 18.87 npm warn deprecated lodash.template@4.5.0: This package is deprecated. Use https://socket.dev/npm/package/eta instead.
+#9 20.03 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+#9 20.57 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+#9 20.91 npm warn deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+#9 21.00 npm warn deprecated figgy-pudding@3.5.2: This module is no longer supported.
+#9 21.05 npm warn deprecated fs-write-stream-atomic@1.0.10: This package is no longer supported.
+#9 22.07 npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+#9 22.16 npm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+#9 22.59 npm warn deprecated copy-concurrently@1.0.5: This package is no longer supported.
+#9 23.79 npm warn deprecated babel-eslint@10.1.0: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
+#9 23.79 npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+#9 24.83 npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+#9 25.17 npm warn deprecated @hapi/topo@3.1.6: This version has been deprecated and is no longer supported or maintained
+#9 25.17 npm warn deprecated @humanwhocodes/config-array@0.5.0: Use @eslint/config-array instead
+#9 25.23 npm warn deprecated @hapi/bourne@1.3.2: This version has been deprecated and is no longer supported or maintained
+#9 25.69 npm warn deprecated @humanwhocodes/object-schema@1.2.1: Use @eslint/object-schema instead
+#9 25.69 npm warn deprecated @hapi/address@2.1.4: Moved to 'npm install @sideway/address'
+#9 26.08 npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+#9 26.14 npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+#9 26.14 npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+#9 26.14 npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+#9 26.14 npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+#9 26.53 npm warn deprecated @hapi/hoek@8.5.1: This version has been deprecated and is no longer supported or maintained
+#9 26.93 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+#9 27.24 npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+#9 30.18 npm warn deprecated @hapi/joi@15.1.1: Switch to 'npm install joi'
+#9 30.99 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+#9 32.94 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+#9 33.39 npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+#9 33.93 npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+#9 35.91 npm warn deprecated @material-ui/styles@4.11.5: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+#9 38.26 npm warn deprecated eslint@7.32.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#9 44.11 npm warn deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+#9 47.44 npm warn deprecated @material-ui/core@4.12.4: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+#9 70.57 
+#9 70.57 added 2320 packages, and audited 2529 packages in 1m
+#9 70.57 
+#9 70.57 251 packages are looking for funding
+#9 70.57   run `npm fund` for details
+#9 70.77 
+#9 70.77 137 vulnerabilities (98 moderate, 32 high, 7 critical)
+#9 70.77 
+#9 70.77 To address issues that do not require attention, run:
+#9 70.77   npm audit fix
+#9 70.77 
+#9 70.77 To address all issues (including breaking changes), run:
+#9 70.77   npm audit fix --force
+#9 70.77 
+#9 70.77 Run `npm audit` for details.
+#9 70.77 npm notice
+#9 70.77 npm notice New major version of npm available! 10.8.2 -> 11.6.0
+#9 70.77 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.0
+#9 70.77 npm notice To update run: npm install -g npm@11.6.0
+#9 70.77 npm notice
+#9 DONE 71.4s
+
+#10 [5/6] RUN npm install
+#10 7.094 npm warn ERESOLVE overriding peer dependency
+#10 7.096 npm warn While resolving: react-only-when@1.0.2
+#10 7.096 npm warn Found: react@17.0.2
+#10 7.096 npm warn node_modules/react
+#10 7.096 npm warn   react@"^17.0.1" from the root project
+#10 7.096 npm warn   58 more (@ant-design/icons, @ant-design/react-slick, ...)
+#10 7.096 npm warn
+#10 7.096 npm warn Could not resolve dependency:
+#10 7.096 npm warn peer react@"^15.0.0 || ^16.0.0" from react-only-when@1.0.2
+#10 7.096 npm warn node_modules/react-elastic-carousel/node_modules/react-only-when
+#10 7.096 npm warn   react-only-when@"^1.0.2" from react-elastic-carousel@0.11.5
+#10 7.096 npm warn   node_modules/react-elastic-carousel
+#10 7.096 npm warn
+#10 7.096 npm warn Conflicting peer dependency: react@16.14.0
+#10 7.096 npm warn node_modules/react
+#10 7.096 npm warn   peer react@"^15.0.0 || ^16.0.0" from react-only-when@1.0.2
+#10 7.096 npm warn   node_modules/react-elastic-carousel/node_modules/react-only-when
+#10 7.096 npm warn     react-only-when@"^1.0.2" from react-elastic-carousel@0.11.5
+#10 7.096 npm warn     node_modules/react-elastic-carousel
+#10 7.129 npm warn ERESOLVE overriding peer dependency
+#10 7.129 npm warn While resolving: react-only-when@1.0.2
+#10 7.129 npm warn Found: react-dom@17.0.2
+#10 7.129 npm warn node_modules/react-dom
+#10 7.129 npm warn   react-dom@"^17.0.1" from the root project
+#10 7.129 npm warn   50 more (@ant-design/icons, @material-ui/core, ...)
+#10 7.129 npm warn
+#10 7.129 npm warn Could not resolve dependency:
+#10 7.129 npm warn peer react-dom@"^15.0.0 || ^16.0.0" from react-only-when@1.0.2
+#10 7.129 npm warn node_modules/react-elastic-carousel/node_modules/react-only-when
+#10 7.129 npm warn   react-only-when@"^1.0.2" from react-elastic-carousel@0.11.5
+#10 7.129 npm warn   node_modules/react-elastic-carousel
+#10 7.129 npm warn
+#10 7.129 npm warn Conflicting peer dependency: react-dom@16.14.0
+#10 7.129 npm warn node_modules/react-dom
+#10 7.129 npm warn   peer react-dom@"^15.0.0 || ^16.0.0" from react-only-when@1.0.2
+#10 7.129 npm warn   node_modules/react-elastic-carousel/node_modules/react-only-when
+#10 7.129 npm warn     react-only-when@"^1.0.2" from react-elastic-carousel@0.11.5
+#10 7.129 npm warn     node_modules/react-elastic-carousel
+#10 7.249 npm warn ERESOLVE overriding peer dependency
+#10 7.250 npm warn While resolving: react-swipeable@5.5.1
+#10 7.250 npm warn Found: react@17.0.2
+#10 7.250 npm warn node_modules/react
+#10 7.250 npm warn   react@"^17.0.1" from the root project
+#10 7.250 npm warn   58 more (@ant-design/icons, @ant-design/react-slick, ...)
+#10 7.250 npm warn
+#10 7.250 npm warn Could not resolve dependency:
+#10 7.250 npm warn peer react@"^16.0.0-0" from react-swipeable@5.5.1
+#10 7.250 npm warn node_modules/react-elastic-carousel/node_modules/react-swipeable
+#10 7.250 npm warn   react-swipeable@"^5.5.1" from react-elastic-carousel@0.11.5
+#10 7.250 npm warn   node_modules/react-elastic-carousel
+#10 7.250 npm warn
+#10 7.250 npm warn Conflicting peer dependency: react@16.14.0
+#10 7.250 npm warn node_modules/react
+#10 7.250 npm warn   peer react@"^16.0.0-0" from react-swipeable@5.5.1
+#10 7.250 npm warn   node_modules/react-elastic-carousel/node_modules/react-swipeable
+#10 7.250 npm warn     react-swipeable@"^5.5.1" from react-elastic-carousel@0.11.5
+#10 7.250 npm warn     node_modules/react-elastic-carousel
+#10 13.90 
+#10 13.90 added 8 packages, removed 17 packages, changed 1 package, and audited 2520 packages in 13s
+#10 13.90 
+#10 13.90 252 packages are looking for funding
+#10 13.90   run `npm fund` for details
+#10 14.08 
+#10 14.08 139 vulnerabilities (100 moderate, 32 high, 7 critical)
+#10 14.08 
+#10 14.08 To address issues that do not require attention, run:
+#10 14.08   npm audit fix
+#10 14.08 
+#10 14.08 To address all issues (including breaking changes), run:
+#10 14.08   npm audit fix --force
+#10 14.08 
+#10 14.08 Run `npm audit` for details.
+#10 DONE 14.4s
+
+#11 [6/6] COPY . .
+#11 DONE 124.6s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 98.6s done
+#12 writing image sha256:18ed87cdff9da6a6521fc302cb647b6b1f80a8affea30b3e1d46fab4f69b062c done
+#12 naming to docker.io/darshan6763/bms:latest done
+#12 DONE 98.7s
++ echo 📤 Pushing Docker image to DockerHub...
+📤 Pushing Docker image to DockerHub...
++ docker push darshan6763/bms:latest
+The push refers to repository [docker.io/darshan6763/bms]
+ea8ea60cc9a7: Preparing
+6288547cd667: Preparing
+19e712e042c2: Preparing
+13b8fe475e92: Preparing
+469ee8ac33ff: Preparing
+d2a991bcab4d: Preparing
+b624aa2d5ea2: Preparing
+d399c9dc306f: Preparing
+84f9fa179c1b: Preparing
+ce84ba212e49: Preparing
+e4dc8cd9ecc8: Preparing
+6428cc293366: Preparing
+2f7436e79a0b: Preparing
+d399c9dc306f: Waiting
+84f9fa179c1b: Waiting
+ce84ba212e49: Waiting
+e4dc8cd9ecc8: Waiting
+6428cc293366: Waiting
+2f7436e79a0b: Waiting
+d2a991bcab4d: Waiting
+b624aa2d5ea2: Waiting
+469ee8ac33ff: Layer already exists
+d2a991bcab4d: Layer already exists
+b624aa2d5ea2: Layer already exists
+d399c9dc306f: Layer already exists
+84f9fa179c1b: Layer already exists
+13b8fe475e92: Pushed
+ce84ba212e49: Layer already exists
+e4dc8cd9ecc8: Layer already exists
+6428cc293366: Layer already exists
+2f7436e79a0b: Layer already exists
+6288547cd667: Pushed
+ea8ea60cc9a7: Pushed
+19e712e042c2: Pushed
+latest: digest: sha256:c2161cd27d166a573cfda0224d9291697dce7458845d2eb9244411630357ae2d size: 3058
+[Pipeline] }
+[Pipeline] // withDockerRegistry
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // catchError
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Trivy Image Scan)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] catchError
+[Pipeline] {
+[Pipeline] sh
++ trivy image darshan6763/bms:latest
+2025-09-14T12:57:17Z	INFO	[vuln] Vulnerability scanning is enabled
+2025-09-14T12:57:17Z	INFO	[secret] Secret scanning is enabled
+2025-09-14T12:57:17Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2025-09-14T12:57:17Z	INFO	[secret] Please see https://trivy.dev/v0.66/docs/scanner/secret#recommendation for faster secret detection
+2025-09-14T12:58:28Z	FATAL	Fatal error	run error: image scan error: scan error: scan failed: failed analysis: analyze error: pipeline error: failed to analyze layer (sha256:469ee8ac33ff7ee25ac064fae218566de72fb8424c5d21b89efbaa152910ff9a): unable to get uncompressed layer sha256:469ee8ac33ff7ee25ac064fae218566de72fb8424c5d21b89efbaa152910ff9a: failed to get the layer (sha256:469ee8ac33ff7ee25ac064fae218566de72fb8424c5d21b89efbaa152910ff9a): unable to populate: unable to open: unable to export the image: Error response from daemon: write /var/lib/docker/tmp/docker-export-1678880684/blobs/sha256/ce84ba212e49beebef47aad10b1e672eb0532e91d313994f6db7fb16e16c7a78: no space left on device
++ true
+[Pipeline] }
+[Pipeline] // catchError
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Container)
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] tool
+[Pipeline] envVarsForTool
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] catchError
+[Pipeline] {
+[Pipeline] sh
++ echo 🛑 Stopping and removing old container...
+🛑 Stopping and removing old container...
++ docker stop bms
+bms
++ docker rm bms
+bms
++ echo 🚀 Running new container on port 3000...
+🚀 Running new container on port 3000...
++ docker run -d --restart=always --name bms -p 3000:3000 darshan6763/bms:latest
+1381580bbd80f73ea802b34a66b4618648fa302a1b0a3d136b39ebd86979a5cf
++ echo 🔎 Checking running containers...
+🔎 Checking running containers...
++ docker ps -a
+CONTAINER ID   IMAGE                     COMMAND                  CREATED                  STATUS                  PORTS                                         NAMES
+1381580bbd80   darshan6763/bms:latest    "docker-entrypoint.s…"   Less than a second ago   Up Less than a second   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   bms
+32e727b9ccc0   sonarqube:lts-community   "/opt/sonarqube/dock…"   7 hours ago              Up 7 hours              0.0.0.0:9000->9000/tcp, [::]:9000->9000/tcp   sonar
++ echo 📜 Fetching logs...
+📜 Fetching logs...
++ sleep 5
++ docker logs bms
+
+> bookmyshow-app@0.1.0 start
+> NODE_OPTIONS=--openssl-legacy-provider react-scripts start
+
+[34mℹ[39m [90m｢wds｣[39m: Project is running at http://172.17.0.2/
+[34mℹ[39m [90m｢wds｣[39m: webpack output is served from 
+[34mℹ[39m [90m｢wds｣[39m: Content not from webpack is served from /app/public
+[34mℹ[39m [90m｢wds｣[39m: 404s will fallback to /
+Starting the development server...
+
+[Pipeline] }
+[Pipeline] // catchError
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] emailext
+Sending email to: rajgupta6763@gmail.com
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
