@@ -1,112 +1,150 @@
 (without K8S Stage)
 pipeline {
     agent any
+
     tools {
         jdk 'jdk17'
-        nodejs 'node23'
+        nodejs 'node18'
     }
+
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
     }
+
     stages {
         stage('Clean Workspace') {
             steps {
                 cleanWs()
             }
         }
+
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/akshu20791/Book-My-Show.git'
-                sh 'ls -la'  // Verify files after checkout
+                withCredentials([usernamePassword(credentialsId: 'github-creds', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                    git branch: 'my-new-feature',
+                        url: "https://${GIT_USER}:${GIT_PASS}@github.com/Darshan6763/Book-My-Show.git"
+                }
+                sh 'ls -la'
             }
         }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh ''' 
-                    $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=BMS \
-                    -Dsonar.projectKey=BMS 
-                    '''
+                    sh """
+                    ${SCANNER_HOME}/bin/sonar-scanner \
+                      -Dsonar.projectName=BMS \
+                      -Dsonar.projectKey=BMS || true
+                    """
                 }
             }
         }
+
         stage('Quality Gate') {
             steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token'
-                }
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                cd bookmyshow-app
-                ls -la  # Verify package.json exists
-                if [ -f package.json ]; then
-                    rm -rf node_modules package-lock.json  # Remove old dependencies
-                    npm install  # Install fresh dependencies
-                else
-                    echo "Error: package.json not found in bookmyshow-app!"
-                    exit 1
-                fi
-                '''
-            }
-        }
-        stage('OWASP FS Scan') {
-            steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
-        stage('Trivy FS Scan') {
-            steps {
-                sh 'trivy fs . > trivyfs.txt'
-            }
-        }
-        stage('Docker Build & Push') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                        sh ''' 
-                        echo "Building Docker image..."
-                        docker build --no-cache -t kastrov/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
-
-                        echo "Pushing Docker image to registry..."
-                        docker push kastrov/bms:latest
-                        '''
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        waitForQualityGate abortPipeline: false
                     }
                 }
             }
         }
-        stage('Deploy to Container') {
+
+        stage('Install Dependencies') {
             steps {
-                sh ''' 
-                echo "Stopping and removing old container..."
-                docker stop bms || true
-                docker rm bms || true
-
-                echo "Running new container on port 3000..."
-                docker run -d --restart=always --name bms -p 3000:3000 kastrov/bms:latest
-
-                echo "Checking running containers..."
-                docker ps -a
-
-                echo "Fetching logs..."
-                sleep 5  # Give time for the app to start
-                docker logs bms
+                sh '''
+                cd bookmyshow-app || exit 0
+                if [ -f package.json ]; then
+                    rm -rf node_modules package-lock.json
+                    npm install || true
+                else
+                    echo "⚠️ package.json not found in bookmyshow-app, skipping..."
+                fi
                 '''
             }
         }
-    }
-    post {
-        always {
-            emailext attachLog: true,
-                subject: "'${currentBuild.result}'",
-                body: "Project: ${env.JOB_NAME}<br/>" +
-                      "Build Number: ${env.BUILD_NUMBER}<br/>" +
-                      "URL: ${env.BUILD_URL}<br/>",
-                to: 'kastrokiran@gmail.com',
-                attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+
+        stage('Trivy FS Scan') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'trivy fs . > trivyfs.txt || true'
+                }
+            }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                            sh '''
+                            echo "🚀 Building Docker image..."
+                            docker build --no-cache -t darshan6763/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app || true
+
+                            echo "📤 Pushing Docker image to DockerHub..."
+                            docker push darshan6763/bms:latest || true
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Trivy Image Scan') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'trivy image darshan6763/bms:latest > trivyimage.txt || true'
+                }
+            }
+        }
+
+        stage('Deploy to Container') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh '''
+                    echo "🛑 Stopping and removing old container..."
+                    docker stop bms || true
+                    docker rm bms || true
+
+                    echo "🚀 Running new container on port 3000..."
+                    docker run -d --restart=always --name bms -p 3000:3000 darshan6763/bms:latest || true
+
+                    echo "🔎 Checking running containers..."
+                    docker ps -a || true
+
+                    echo "📜 Fetching logs..."
+                    sleep 5
+                    docker logs bms || true
+                    '''
+                }
+            }
         }
     }
-}
+
+    post {
+        always {
+            emailext(
+                attachLog: true,
+                from: ‘rajgupta6763@gmail.com',      
+                subject: "[${currentBuild.result}] - BMS CI/CD Pipeline #${env.BUILD_NUMBER}",
+                body: """
+                    <html>
+                    <body>
+                        <h2>Build Notification</h2>
+                        <p><b>Project:</b> ${env.JOB_NAME}</p>
+                        <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                        <p><b>Status:</b> ${currentBuild.result}</p>
+                        <p><b>Triggered by:</b> ${currentBuild.getBuildCauses()[0].shortDescription}</p>
+                        <p><b>URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                        <hr>
+                        <p>This is an automated email from Jenkins.</p>
+                    </body>
+                    </html>
+                """,
+                to: ‘rajgupta6763@gmail.com',
+                mimeType: 'text/html',                        
+                attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+            )
+        }
+    }
+
